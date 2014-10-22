@@ -45,6 +45,7 @@
 - (instancetype)initWithURLRequest:(NSURLRequest*)request {
     self = [super init];
     if (self) {
+        _previousViewControllerToolbarHidden = YES;
         self.request = request;
     }
     return self;
@@ -93,7 +94,9 @@
     [super viewWillDisappear:animated];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [self.navigationController setToolbarHidden:YES animated:animated];
+        if (self.isMovingFromParentViewController && self.isPreviousViewControllerToolbarHidden) {
+            [self.navigationController setToolbarHidden:YES animated:animated];
+        }
     }
 }
 
